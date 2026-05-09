@@ -93,12 +93,26 @@ export default function BookingModal({ restaurant, onClose }) {
 
         {status === "success" ? (
           <div className="booking-success">
-            <div className="booking-success-icon">✓</div>
-            <h2>Đặt bàn thành công!</h2>
-            <p>
-              Chúng tôi sẽ liên hệ với bạn trong thời gian sớm nhất để xác nhận
-              đặt chỗ.
-            </p>
+            <h2 className="booking-success-heading">TIẾP NHẬN THÀNH CÔNG</h2>
+            <div className="booking-success-body">
+              <p>Thông tin đặt bàn của Quý khách được tiếp nhận.</p>
+              <p>
+                PATO sẽ gọi điện tới SĐT:{" "}
+                <strong>{form.phone}</strong> để xác nhận trong vòng 10 phút
+                tới. Vui lòng giữ liên lạc!
+              </p>
+              <p>
+                Đặt bàn của Quý khách được xác nhận thành công chỉ khi có cuộc
+                gọi xác nhận từ PATO.
+              </p>
+              <p>Cảm ơn Quý khách đã sử dụng dịch vụ của PATO!</p>
+              <p className="booking-success-privacy">
+                Mọi thông tin khách hàng cung cấp chỉ được sử dụng cho mục đích
+                đặt bàn, hoàn toàn không dùng cho bất kì mục đích nào khác.
+                <br />
+                Vui lòng tham khảo thêm "Chính sách bảo mật thông tin".
+              </p>
+            </div>
             <button className="btn-booking-submit" onClick={onClose}>
               Đóng
             </button>
