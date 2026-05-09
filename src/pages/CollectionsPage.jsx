@@ -169,7 +169,8 @@ export default function CollectionsPage() {
       <div className="wrapper">
         <Breadcrumb items={breadcrumbItems} />
         <div className="collections-inner">
-          <aside className="collections-sidebar">
+          {/* Filter sidebar — shown on /collections/:handle only, not on plain /collections?... */}
+          {handle && <aside className="collections-sidebar">
             <div className="filter-section">
               <h3>Khu vực</h3>
               <div className="filter-dropdowns">
@@ -308,7 +309,7 @@ export default function CollectionsPage() {
                 ))}
               </div>
             </div>
-          </aside>
+          </aside>}
 
           <div className="collections-content">
             <div className="collections-header">
