@@ -1,7 +1,9 @@
 import { useEffect } from 'react'
 import { Routes, Route, useLocation } from 'react-router-dom'
+import posthog from 'posthog-js'
 import Header from './components/Header'
 import Footer from './components/Footer'
+import ExperimentNotice from './components/ExperimentNotice'
 import HomePage from './pages/HomePage'
 import CollectionsPage from './pages/CollectionsPage'
 import SearchPage from './pages/SearchPage'
@@ -17,13 +19,23 @@ function ScrollToTop() {
   return null
 }
 
+function PageviewTracker() {
+  const location = useLocation()
+  useEffect(() => {
+    posthog.capture('$pageview', { $current_url: window.location.href })
+  }, [location.pathname, location.search])
+  return null
+}
+
 export default function App() {
   const load = useStore(s => s.load)
   useEffect(() => { load() }, [load])
 
   return (
     <>
+      <ExperimentNotice />
       <ScrollToTop />
+      <PageviewTracker />
       <Header />
       <main>
         <Routes>

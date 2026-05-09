@@ -7,9 +7,13 @@ import App from './App.jsx'
 
 posthog.init(import.meta.env.VITE_POSTHOG_KEY, {
   api_host: import.meta.env.VITE_POSTHOG_HOST || 'https://us.i.posthog.com',
-  capture_pageview: 'history_change',
+  // Pageviews fired manually in App.jsx to handle HashRouter + search-param changes correctly
+  capture_pageview: false,
   capture_pageleave: true,
   autocapture: true,
+  enable_heatmaps: true,    // visual heatmaps + scroll depth
+  rageclick: true,          // default true, explicit for clarity
+  capture_dead_clicks: true, // default true, explicit for clarity
 })
 
 createRoot(document.getElementById('root')).render(
