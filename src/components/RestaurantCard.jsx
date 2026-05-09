@@ -18,13 +18,13 @@ export default function RestaurantCard({ restaurant, section = "unknown" }) {
   return (
     <div className="product-item">
       <div className="product-img">
-        <Link to={`/products/${r.handle}`} target="_blank" onClick={trackClick}>
+        <Link to={`/products/${r.handle}`} onClick={trackClick}>
           <img src={r.thumbnail} alt={r.title} loading="lazy" />
         </Link>
       </div>
       <div className="product-item-info">
           <div className="product-title">
-            <Link to={`/products/${r.handle}`} target="_blank" onClick={trackClick}>
+            <Link to={`/products/${r.handle}`} onClick={trackClick}>
               {r.title}
             </Link>
           </div>

@@ -2,15 +2,15 @@ import { useState } from 'react'
 import posthog from 'posthog-js'
 import './ExperimentNotice.css'
 
-const SESSION_KEY = 'pato_experiment_ack'
+const STORAGE_KEY = 'pato_experiment_ack'
 
 export default function ExperimentNotice() {
-  const [visible, setVisible] = useState(() => !sessionStorage.getItem(SESSION_KEY))
+  const [visible, setVisible] = useState(() => !localStorage.getItem(STORAGE_KEY))
 
   if (!visible) return null
 
   const handleStart = () => {
-    sessionStorage.setItem(SESSION_KEY, '1')
+    localStorage.setItem(STORAGE_KEY, '1')
     posthog.capture('experiment_session_start')
     setVisible(false)
   }
