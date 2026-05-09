@@ -343,7 +343,7 @@ export default function CollectionsPage() {
               <>
                 <div className="collections-grid">
                   {pageItems.map((r) => (
-                    <RestaurantCard key={r.handle} restaurant={r} />
+                    <RestaurantCard key={r.handle} restaurant={r} section="collections_page" />
                   ))}
                 </div>
                 {totalPages > 1 && (

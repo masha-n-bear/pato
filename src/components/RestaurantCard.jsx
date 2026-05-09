@@ -3,21 +3,28 @@ import posthog from "posthog-js";
 
 const PRICE_SYMBOLS = { 1: "$", 2: "$$", 3: "$$$", 4: "$$$$", 5: "$$$$$" };
 
-export default function RestaurantCard({ restaurant }) {
+export default function RestaurantCard({ restaurant, section = "unknown" }) {
   const r = restaurant;
   const priceStr = PRICE_SYMBOLS[r.price_range] || "";
   const priceRest = "$$$$$".slice(priceStr.length);
 
+  const trackClick = () =>
+    posthog.capture("restaurant_card_click", {
+      restaurant_handle: r.handle,
+      section,
+      $current_url: window.location.href,
+    });
+
   return (
     <div className="product-item">
       <div className="product-img">
-        <Link to={`/products/${r.handle}`} target="_blank">
+        <Link to={`/products/${r.handle}`} target="_blank" onClick={trackClick}>
           <img src={r.thumbnail} alt={r.title} loading="lazy" />
         </Link>
       </div>
       <div className="product-item-info">
           <div className="product-title">
-            <Link to={`/products/${r.handle}`} target="_blank">
+            <Link to={`/products/${r.handle}`} target="_blank" onClick={trackClick}>
               {r.title}
             </Link>
           </div>

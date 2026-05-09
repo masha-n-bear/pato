@@ -37,7 +37,7 @@ export default function SearchPage() {
           </p>
           <div className="search-grid">
             {results.map(r => (
-              <RestaurantCard key={r.handle} restaurant={r} />
+              <RestaurantCard key={r.handle} restaurant={r} section="search_results" />
             ))}
           </div>
           {loaded && results.length === 0 && (

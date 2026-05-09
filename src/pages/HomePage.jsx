@@ -398,7 +398,7 @@ export default function HomePage() {
                       items={col.items}
                       fixedWidth={300}
                       gap={20}
-                      renderItem={(r) => <RestaurantCard restaurant={r} />}
+                      renderItem={(r) => <RestaurantCard restaurant={r} section={`home_collection:${col.handle}`} />}
                     />
                   </div>
                 </div>

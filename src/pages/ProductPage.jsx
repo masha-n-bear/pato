@@ -618,7 +618,7 @@ export default function ProductPage() {
                   items={related}
                   itemsPerView={3}
                   gap={20}
-                  renderItem={(rest) => <RestaurantCard restaurant={rest} />}
+                  renderItem={(rest) => <RestaurantCard restaurant={rest} section="related_restaurants" />}
                 />
               </div>
             )}
