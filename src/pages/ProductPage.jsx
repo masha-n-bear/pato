@@ -610,18 +610,6 @@ export default function ProductPage() {
               </div>
             )}
 
-            {/* Related */}
-            {related.length > 0 && (
-              <div className="product-related">
-                <h2>Các địa điểm liên quan</h2>
-                <Carousel
-                  items={related}
-                  itemsPerView={3}
-                  gap={20}
-                  renderItem={(rest) => <RestaurantCard restaurant={rest} section="related_restaurants" />}
-                />
-              </div>
-            )}
           </div>
 
           {/* ── RIGHT: sticky sidebar ── */}
@@ -720,6 +708,19 @@ export default function ProductPage() {
             </div>
           </div>
         </div>
+
+        {/* Related — full width below the two-column layout */}
+        {related.length > 0 && (
+          <div className="product-related">
+            <h2>Các địa điểm liên quan</h2>
+            <Carousel
+              items={related}
+              itemsPerView={3}
+              gap={20}
+              renderItem={(rest) => <RestaurantCard restaurant={rest} section="related_restaurants" />}
+            />
+          </div>
+        )}
       </div>
 
       <Lightbox
@@ -733,6 +734,22 @@ export default function ProductPage() {
       {bookingOpen && (
         <BookingModal restaurant={r} onClose={() => setBookingOpen(false)} />
       )}
+
+      {/* Mobile sticky bottom nav — hidden on desktop via CSS */}
+      <div id="mobile-bottom-navigation">
+        <button onClick={() => { posthog.capture("mobile_nav_call_click", { restaurant_handle: r.handle }); setBookingOpen(true); }}>
+          <svg width="22" fill="#fff" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><path d="m256 0c-140.609375 0-256 115.390625-256 256 0 46.40625 12.511719 91.582031 36.238281 131.105469l-36.238281 124.894531 124.894531-36.238281c39.523438 23.726562 84.699219 36.238281 131.105469 36.238281 140.609375 0 256-115.390625 256-256s-115.390625-256-256-256zm160.054688 364.167969-11.910157 11.910156c-16.851562 16.851563-55.605469 15.515625-80.507812 10.707031-82.800781-15.992187-179.335938-109.5625-197.953125-190.59375-9.21875-40.140625-4.128906-75.039062 9.183594-88.355468l11.910156-11.910157c6.574218-6.570312 17.253906-6.5625 23.820312 0l47.648438 47.652344c3.179687 3.179687 4.921875 7.394531 4.921875 11.90625s-1.742188 8.730469-4.921875 11.898437l-11.90625 11.921876c-13.125 13.15625-13.125 34.527343 0 47.652343l78.683594 77.648438c13.164062 13.164062 34.46875 13.179687 47.652343 0l11.910157-11.90625c6.148437-6.183594 17.632812-6.203125 23.832031 0l47.636719 47.636719c6.46875 6.441406 6.714843 17.113281 0 23.832031zm0 0"/></svg>
+          <span>Gọi ngay</span>
+        </button>
+        <button onClick={() => { posthog.capture("mobile_nav_book_click", { restaurant_handle: r.handle }); setBookingOpen(true); }}>
+          <svg width="22" fill="#fff" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path fill="currentColor" d="M436 160c6.627 0 12-5.373 12-12v-40c0-6.627-5.373-12-12-12h-20V48c0-26.51-21.49-48-48-48H48C21.49 0 0 21.49 0 48v416c0 26.51 21.49 48 48 48h320c26.51 0 48-21.49 48-48v-48h20c6.627 0 12-5.373 12-12v-40c0-6.627-5.373-12-12-12h-20v-64h20c6.627 0 12-5.373 12-12v-40c0-6.627-5.373-12-12-12h-20v-64h20zm-228-32c44.183 0 80 35.817 80 80s-35.817 80-80 80-80-35.817-80-80 35.817-80 80-80zm128 232c0 13.255-10.745 24-24 24H104c-13.255 0-24-10.745-24-24v-18.523c0-22.026 14.99-41.225 36.358-46.567l35.657-8.914c29.101 20.932 74.509 26.945 111.97 0l35.657 8.914C321.01 300.252 336 319.452 336 341.477V360z"/></svg>
+          <span>Đặt ngay</span>
+        </button>
+        <button onClick={() => { posthog.capture("mobile_nav_chat_click", { restaurant_handle: r.handle }); setBookingOpen(true); }}>
+          <svg width="22" fill="#fff" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path fill="currentColor" d="M576 240c0 115-129 208-288 208-48.3 0-93.9-8.6-133.9-23.8-40.3 31.2-89.8 50.3-142.4 55.7-5.2.6-10.2-2.8-11.5-7.7-1.3-5 2.7-8.1 6.6-11.8 19.3-18.4 42.7-32.8 51.9-94.6C21.9 330.9 0 287.3 0 240 0 125.1 129 32 288 32s288 93.1 288 208z"/></svg>
+          <span>Chat ngay</span>
+        </button>
+      </div>
     </div>
   );
 }
