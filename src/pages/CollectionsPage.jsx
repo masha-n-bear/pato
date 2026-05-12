@@ -1,4 +1,4 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
 import posthog from "posthog-js";
 import RestaurantCard from "../components/RestaurantCard";
@@ -25,6 +25,7 @@ export default function CollectionsPage() {
   const { restaurants, collections, locations, loaded } = useStore();
   const { handle } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [filterOpen, setFilterOpen] = useState(false);
 
   // All filter state derived directly from URL
   const cuisines = searchParams.getAll("cuisine");
@@ -169,8 +170,10 @@ export default function CollectionsPage() {
       <div className="wrapper">
         <Breadcrumb items={breadcrumbItems} />
         <div className="collections-inner">
-          {/* Filter sidebar — shown on /collections/:handle only, not on plain /collections?... */}
-          {handle && <aside className="collections-sidebar">
+          {/* Filter sidebar — always shown; slides in as drawer on mobile */}
+          {filterOpen && <div className="filter-overlay" onClick={() => setFilterOpen(false)} />}
+          <aside className={`collections-sidebar${filterOpen ? " is-open" : ""}`}>
+            <button className="filter-close-btn" onClick={() => setFilterOpen(false)}>✕ Đóng</button>
             <div className="filter-section">
               <h3>Khu vực</h3>
               <div className="filter-dropdowns">
@@ -309,25 +312,30 @@ export default function CollectionsPage() {
                 ))}
               </div>
             </div>
-          </aside>}
+          </aside>
 
           <div className="collections-content">
             <div className="collections-header">
+              <div className="collections-header-right">
+                <button className="mobile-filter-btn" onClick={() => setFilterOpen(true)}>
+                  ☰ Lọc nâng cao
+                </button>
+                <select
+                  className="sort-select"
+                  value={sort}
+                  onChange={(e) => setSort(e.target.value)}
+                >
+                  <option value="default">Pato đề xuất</option>
+                  <option value="newest">Mới nhất</option>
+                  <option value="price_asc">Giá từ thấp đến cao</option>
+                  <option value="price_desc">Giá từ cao đến thấp</option>
+                </select>
+              </div>
               <span className="result-count">
                 {loaded
                   ? `Có ${filtered.length} nhà hàng phù hợp`
                   : "Đang tải..."}
               </span>
-              <select
-                className="sort-select"
-                value={sort}
-                onChange={(e) => setSort(e.target.value)}
-              >
-                <option value="default">Pato đề xuất</option>
-                <option value="newest">Mới nhất</option>
-                <option value="price_asc">Giá từ thấp đến cao</option>
-                <option value="price_desc">Giá từ cao đến thấp</option>
-              </select>
             </div>
 
             {!loaded ? (
