@@ -183,7 +183,7 @@
     font-weight: 700;
     white-space: nowrap;
     transition: background 0.2s;
-    align-self: center;
+    align-self: flex-start;
 }
 
 .btn-promo-book:hover {

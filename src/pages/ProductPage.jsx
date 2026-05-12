@@ -543,7 +543,7 @@ export default function ProductPage() {
                       <strong className="promo-title">{p.title}</strong>
                       {p.description && (
                         <div className="promo-desc">
-                          {renderInline(p.description)}
+                          {renderMarkdown(p.description)}
                         </div>
                       )}
                     </div>
@@ -629,9 +629,33 @@ export default function ProductPage() {
             {/* Card 1: Booking */}
             <div className="sidebar-card sidebar-booking">
               <div className="sidebar-restaurant-name">{r.title}</div>
-              {r.discount && r.discount_details && (
-                <div className="sidebar-discount">{r.discount_details}</div>
-              )}
+              {r.discount && r.discount_details && (() => {
+                let items;
+                try { items = JSON.parse(r.discount_details); } catch { items = null; }
+                if (Array.isArray(items)) {
+                  return (
+                    <div className="sidebar-discount">
+                      {items.map((item, i) => (
+                        <div key={i} className="sidebar-discount-item">
+                          {item.title && <div className="sidebar-discount-title">{item.title}</div>}
+                          {item.description && (
+                            <div className="sidebar-discount-desc">
+                              {item.description.split('\n').map((line, j) => (
+                                <span key={j}>{line}{j < item.description.split('\n').length - 1 && <br />}</span>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  );
+                }
+                return (
+                  <div className="sidebar-discount" style={{ whiteSpace: 'pre-line' }}>
+                    {r.discount_details}
+                  </div>
+                );
+              })()}
               <button
                 className="btn-sidebar-book"
                 disabled={r.status === "Dừng hoạt động"}
