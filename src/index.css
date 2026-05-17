@@ -16,9 +16,7 @@
     --bg: #ffffff;
 }
 
-html {
-    zoom: 1.25;
-}
+
 
 @media (max-width: 768px) {
     html {
