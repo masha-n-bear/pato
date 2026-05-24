@@ -10,7 +10,7 @@ const TIMES = Array.from({ length: 96 }, (_, i) => {
 
 const PEOPLE = Array.from({ length: 100 }, (_, i) => `${i + 1} người`);
 
-export default function BookingModal({ restaurant, onClose }) {
+export default function BookingModal({ restaurant, onClose, source = null }) {
   const [form, setForm] = useState({
     name: "",
     phone: "",
@@ -26,6 +26,7 @@ export default function BookingModal({ restaurant, onClose }) {
     posthog.capture("booking_modal_open", {
       restaurant_handle: restaurant?.handle,
       restaurant_name: restaurant?.title,
+      source: source ?? null,
     });
   }, []);
 
